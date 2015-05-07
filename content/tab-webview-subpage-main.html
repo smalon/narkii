@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<title>Hello MUI</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+		<link rel="stylesheet" href="../css/mui.min.css">
+		<style>
+			html,
+			body {
+				background-color: #efeff4;
+			}
+			.title {
+				margin: 20px 15px 10px;
+				color: #6d6d72;
+				font-size: 15px;
+			}
+		</style>
+	</head>
+<script>
+		var itemid = 'item1';
+		function selectedItem(_itemid) {
+				itemid = _itemid;
+		}
+	
+</script>
+	<body>
+		<div class="mui-content">
+			<div id="segmentedControl" class="mui-segmented-control">
+	<a class="mui-control-item mui-active" id="item1" href="#item1mobile" onfocus="selectedItem('item1')">
+			最新
+		</a>
+	<a class="mui-control-item" id='item2' href="#item2mobile" onfocus="selectedItem('item2')">
+			最热门
+		</a>
+	<a class="mui-control-item" 'item3' href="#item3mobile" onfocus="selectedItem('item3')">
+			和我相关
+		</a>
+</div>
+<div class="mui-content-padded">
+<div id="item1mobile" class="mui-control-content mui-active">
+<div id="pullrefresh" class="mui-scroll-wrapper">
+	<div class="mui-scroll">
+		<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media">
+					<a href="#">
+						<img class="mui-media-object mui-pull-left" src="../images/shuijiao.jpg">
+						<div class="mui-media-body">
+							幸福
+							<p class='mui-ellipsis'><span class="mui-ellipsis-2">能和心爱的人一起睡觉，是件幸福的事情；可是，打呼噜怎么办？测试测试测试测试测试测试</span></p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="#">
+						<img class="mui-media-object mui-pull-left" src="../images/muwu.jpg">
+						<div class="mui-media-body">
+							木屋
+							<p class='mui-ellipsis'><span class="mui-ellipsis-2">想要这样一间小木屋，夏天挫冰吃瓜，冬天围炉取暖测试测试测试测试.</span></p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="#">
+						<img class="mui-media-object mui-pull-left" src="../images/cbd.jpg">
+						<div class="mui-media-body">
+							CBD
+							<p class='mui-ellipsis'><span class="mui-ellipsis-2">烤炉模式的城，到黄昏，如同打翻的调色盘一般测试测试测试测试测试测试.</span></p>
+						</div>
+					</a>
+				</li>
+				<li class="mui-table-view-cell mui-media">
+					<a href="#">
+						<img class="mui-media-object mui-pull-left" src="../images/yuantiao.jpg">
+						<div class="mui-media-body">
+							远眺
+							<p class='mui-ellipsis'><span class="mui-ellipsis-2">静静的看这个世界，最后终于疯了</span></p>
+						</div>
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+	</div>
+	<div id="item2mobile" class="mui-control-content">
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				第二个选项卡子项-1
+			</li>
+			<li class="mui-table-view-cell">
+				第二个选项卡子项-2
+			</li>
+			<li class="mui-table-view-cell">
+				第二个选项卡子项-3
+			</li>
+			<li class="mui-table-view-cell">
+				第二个选项卡子项-4
+			</li>
+			<li class="mui-table-view-cell">
+				第二个选项卡子项-6
+			</li>
+		</ul>
+	</div>
+	<div id="item3mobile" class="mui-control-content">
+		<ul class="mui-table-view">
+			<li class="mui-table-view-cell">
+				第三个选项卡子项-1
+			</li>
+			<li class="mui-table-view-cell">
+				第三个选项卡子项-2
+			</li>
+			<li class="mui-table-view-cell">
+				第三个选项卡子项-3
+			</li>
+			<li class="mui-table-view-cell">
+				第三个选项卡子项-4
+			</li>
+			<li class="mui-table-view-cell">
+				第三个选项卡子项-5
+			</li>
+		</ul>
+	</div>
+</div>
+			
+		</div>
+	</body>
+			<script src="../js/mui.min.js"></script>
+			<script src="../js/app.js"></script>
+			<script>
+			
+			
+				mui.init({
+					swipeBack: false,
+					pullRefresh: {
+						container: '#pullrefresh',
+						down: {
+							callback: pulldownRefresh
+						},
+						up: {
+							contentrefresh: '正在加载...',
+							callback: pullupRefresh
+						}
+					}
+				});
+				/**
+				 * 下拉刷新具体业务实现
+				 */
+				function pulldownRefresh() {
+					setTimeout(function() {
+						var table = document.body.querySelector('.mui-table-view');
+						var cells = document.body.querySelectorAll('.mui-table-view-cell');
+						for (var i = cells.length, len = i + 3; i < len; i++) {
+							var li = document.createElement('li');
+							li.className = 'mui-table-view-cell';
+							li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+							//下拉刷新，新纪录插到最前面；
+							document.
+							table.insertBefore(li, table.firstChild);
+						}
+						mui('#pullrefresh').pullRefresh().endPulldownToRefresh(); //refresh completed
+					}, 1000);
+				}
+				var count = 0;
+				/**
+				 * 上拉加载具体业务实现
+				 */
+				function pullupRefresh() {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh((++count > 2)); //参数为true代表没有更多数据了。
+						var table = document.body.querySelector('.mui-table-view');
+						var cells = document.body.querySelectorAll('.mui-table-view-cell');
+						for (var i = cells.length, len = i + 20; i < len; i++) {
+							var li = document.createElement('li');
+							li.className = 'mui-table-view-cell';
+							li.innerHTML = '<a class="mui-navigate-right">Item ' + (i + 1) + '</a>';
+							table.appendChild(li);
+						}
+					}, 1000);
+				}
+			</script>
+
+</html>
